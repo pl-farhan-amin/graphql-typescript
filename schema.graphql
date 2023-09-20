@@ -1,0 +1,55 @@
+
+input addGameInput{
+    title: String!
+    platform: [String!]!
+}
+
+input updateGameInput{
+    id: ID!
+    title: String!
+    platform: [String!]!
+}
+
+type HelloPayload{
+    text: String!
+}
+
+type GamePayload{
+    id: ID!
+    title: String
+    platform: [String]
+    reviews: [ReviewPayload]
+}
+
+type AuthorPayload{
+    id: ID!
+    name: String
+    verified: Boolean!
+    reviews: [ReviewPayload]
+}
+
+type ReviewPayload{
+    id: ID!
+    rating: Int!
+    content: String
+    gameId: String
+    authorId: String
+    author: AuthorPayload
+    game: GamePayload
+}
+
+type Query{
+    hello: HelloPayload
+    game: [GamePayload]
+    author: [AuthorPayload]
+    review: [ReviewPayload]
+    getReviewById(id: ID!): ReviewPayload
+    getAuthorById(id: ID!): AuthorPayload
+    getGameById(id: ID!): GamePayload
+}
+
+type Mutation{
+    addGame(input: addGameInput!): GamePayload
+    deleteGame(id: ID!): [GamePayload]!
+    updateGame(input: updateGameInput!): GamePayload!
+}
